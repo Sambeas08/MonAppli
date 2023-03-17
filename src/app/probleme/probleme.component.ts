@@ -15,7 +15,7 @@ export class ProblemeComponent {
   constructor(private fb:FormBuilder) {}
   ngOnInit(){
     this.problemeForm=this.fb.group({
-      prenom:['',[Validators.minLength(3)]]
+      prenom:['',[Validators.minLength(3),Validators.required]]
     })
     
 

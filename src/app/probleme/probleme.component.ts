@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProblemeComponent {
 
   problemeForm:FormGroup
+  save(): void {
+  }
 
 
 

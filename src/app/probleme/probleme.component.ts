@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { VerifierCaracteresValidator } from '../shared/longueur-minimum/longueur-minimum.component';
 
 @Component({
   selector: 'inter-probleme',
   templateUrl: './probleme.component.html',
-  styleUrls: ['./probleme.component.css']
+  styleUrls: ['./probleme.component.css'] 
 })
 export class ProblemeComponent {
 
@@ -17,7 +18,7 @@ export class ProblemeComponent {
   constructor(private fb:FormBuilder) {}
   ngOnInit(){
     this.problemeForm=this.fb.group({
-      prenom:['',[Validators.minLength(3),Validators.required]]
+      prenom: ['' , [VerifierCaracteresValidator.longueurMinimum(3), Validators.required]]
     })
     
 

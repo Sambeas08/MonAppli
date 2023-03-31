@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProblemeComponent } from './probleme.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ProblemeComponent', () => {
   let component: ProblemeComponent;
@@ -9,6 +11,7 @@ describe('ProblemeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ProblemeComponent],
+      imports:[ReactiveFormsModule, HttpClientModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProblemeComponent);

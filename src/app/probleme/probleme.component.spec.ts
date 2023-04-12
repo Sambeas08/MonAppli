@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProblemeComponent } from './probleme.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ProblemeService } from './probleme.service';
 
 describe('ProblemeComponent', () => {
   let component: ProblemeComponent;
@@ -11,7 +12,8 @@ describe('ProblemeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ProblemeComponent],
-      imports:[ReactiveFormsModule, HttpClientModule]
+      imports: [ReactiveFormsModule, HttpClientModule],
+      providers: [ProblemeService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProblemeComponent);
@@ -58,4 +60,35 @@ describe('ProblemeComponent', () => {
     prenom.setValue(' '.repeat(2) + 'a'.repeat(1));
     expect(prenom.valid).toBeFalse();
   });
+
+  it('#15 | Zone TELEPHONE est désactivée quand ne pas me notifier', () => {
+    component.gestionNotification();
+
+    let zone = component.problemeForm.get('telephone');
+    expect(zone.disabled).toBeTruthy();
+  });
+
+  it('#16 | Zone TELEPHONE est vide quand ne pas me notifier', () => {
+    component.gestionNotification();
+
+    let zone = component.problemeForm.get('telephone');
+    expect(zone.value).toBeNull();
+  });
+
+  it('#17 | Zone ADRESSE COURRIEL est désactivée quand ne pas me notifier', () => {
+    component.gestionNotification();
+
+    let zone = component.problemeForm.get('courrielGroup.courriel');
+    expect(zone.disabled).toBeTruthy();
+  });
+  
+
+
+  it('#18 | Zone CONFIRMER COURRIEL est désactivée quand ne pas me notifier', () => {
+    component.gestionNotification();
+
+    let zone = component.problemeForm.get('courrielGroup.courrielConfirmation');
+    expect(zone.disabled).toBeTruthy();
+  });
+
 });

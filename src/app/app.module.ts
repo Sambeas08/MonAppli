@@ -11,6 +11,7 @@ import { ProblemeService } from './probleme/probleme.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ProblemeData } from './probleme/probleme-data';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { EmailMatcherComponent } from './shared/email-matcher/email-matcher.component';
 
 
 
@@ -18,7 +19,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
   declarations: [
     AppComponent,
     ProblemeComponent,
-    AccueilComponent
+    AccueilComponent,
+    EmailMatcherComponent
     
  
     

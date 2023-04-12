@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VerifierCaracteresValidator } from '../shared/longueur-minimum/longueur-minimum.component';
 import { ITypeProbleme } from './probleme';
 import { ProblemeService } from './probleme.service';
+import { emailMatcherValidator } from '../shared/email-matcher/email-matcher.component';
 
 @Component({
   selector: 'inter-probleme',
@@ -33,6 +34,7 @@ export class ProblemeComponent {
         courrielConfirmation: [{ value: '', disabled: true }],
       }),
       telephone: [{ value: '', disabled: true }],
+      pasnotification: [{ value: '', disabled: true }],
     });
 
     this.problemes.obtenirTypesProbleme().subscribe(
@@ -41,25 +43,59 @@ export class ProblemeComponent {
     );
   }
 
-  gestionNotification(): void {
+  gestionNotification(typeNotification: string): void {
     const courriel = this.problemeForm.get('courrielGroup.courriel');
-    const courrielConfirmation = this.problemeForm.get('courrielGroup.courrielConfirmation');
+    const courrielConfirmation = this.problemeForm.get(
+      'courrielGroup.courrielConfirmation'
+    );
+    const courrielGroupControl = this.problemeForm.get('courrielGroup');
     const telephone = this.problemeForm.get('telephone');
+    const pasnotification = this.problemeForm.get('pasnotification');
 
-    telephone.disable(); 
-    courriel.disable();
-    courrielConfirmation.disable();
-    telephone.clearValidators();
-    telephone.reset();    
     telephone.disable();
-    courriel.clearValidators();
-    courriel.reset();    
     courriel.disable();
+    courrielConfirmation.disable();
+    pasnotification.disable();
+
+    telephone.clearValidators();
+    telephone.reset();
+    telephone.disable();
+
+    courriel.clearValidators();
+    courriel.reset();
+    courriel.disable();
+
     courrielConfirmation.clearValidators();
-    courrielConfirmation.reset();    
+    courrielConfirmation.reset();
     courrielConfirmation.disable();
 
-     
-  }
+    pasnotification.clearValidators();
+    pasnotification.reset();
+    pasnotification.disable();
 
+    if (typeNotification === 'ParCourriel') {
+      courriel.setValidators([
+        Validators.required,
+        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+'),
+      ]);
+      courrielConfirmation.setValidators([
+        Validators.required,
+        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+'),
+      ]);
+      courriel.enable();
+      courrielConfirmation.enable();
+
+      // Si le validateur est dans un autre fichier l'écire sous la forme suivante :
+      // ...Validators.compose([classeDuValidateur.NomDeLaMethode()])])
+      courrielGroupControl.setValidators([
+        Validators.compose([emailMatcherValidator.courrielDifferents()]),
+      ]);
+
+    } else {
+      if (typeNotification === 'ParTelephone') {
+        telephone.setValidators([Validators.required]);
+        telephone.enable();
+      }
+    }
+  }
 }

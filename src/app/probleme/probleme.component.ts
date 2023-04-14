@@ -93,7 +93,7 @@ export class ProblemeComponent {
 
     } else {
       if (typeNotification === 'ParTelephone') {
-        telephone.setValidators([Validators.required]);
+        telephone.setValidators([Validators.required,Validators.pattern('[0-9]+'),Validators.minLength(10),Validators.maxLength(10)]);
         telephone.enable();
       }
     }

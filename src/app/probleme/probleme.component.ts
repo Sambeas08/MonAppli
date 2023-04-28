@@ -4,6 +4,7 @@ import { VerifierCaracteresValidator } from '../shared/longueur-minimum/longueur
 import { ITypeProbleme } from './probleme';
 import { ProblemeService } from './probleme.service';
 import { emailMatcherValidator } from '../shared/email-matcher/email-matcher.component';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'inter-probleme',
@@ -35,12 +36,20 @@ export class ProblemeComponent {
       }),
       telephone: [{ value: '', disabled: true }],
       pasnotification: [{ value: '', disabled: true }],
+      notification:['pasnotification']
     });
 
     this.problemes.obtenirTypesProbleme().subscribe(
       (typesProbleme) => (this.typesProbleme = typesProbleme),
       (error) => (this.errorMessage = <any>error)
+
     );
+
+    this.problemeForm.get('notification').valueChanges
+    .subscribe(value=>this.gestionNotification(value));
+
+   
+
   }
 
   gestionNotification(typeNotification: string): void {
@@ -73,7 +82,7 @@ export class ProblemeComponent {
     pasnotification.reset();
     pasnotification.disable();
 
-    if (typeNotification === 'ParCourriel') {
+    if (typeNotification === 'courriel') {
       courriel.setValidators([
         Validators.required,
         Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+'),
@@ -92,7 +101,7 @@ export class ProblemeComponent {
       ]);
 
     } else {
-      if (typeNotification === 'ParTelephone') {
+      if (typeNotification === 'messageTexte') {
         telephone.setValidators([Validators.required,Validators.pattern('[0-9]+'),Validators.minLength(10),Validators.maxLength(10)]);
         telephone.enable();
       }
